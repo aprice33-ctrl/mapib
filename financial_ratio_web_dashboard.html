@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Financial Ratio Learning Dashboard</title>
+<style>
+:root{--bg:#0f172a;--panel:#111c33;--card:#16233d;--text:#eef4ff;--muted:#9fb0cc;--blue:#58a6ff;--green:#31d095;--yellow:#f7c948;--red:#ff6b6b;--purple:#a78bfa;--line:#2a3a5f;--white:#fff}*{box-sizing:border-box}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:linear-gradient(135deg,#09111f,#14213d 52%,#0d1b2a);color:var(--text)}.app{max-width:1280px;margin:0 auto;padding:24px}.hero{display:grid;grid-template-columns:1.2fr .8fr;gap:18px;align-items:stretch}.hero-card{background:linear-gradient(135deg,rgba(88,166,255,.25),rgba(167,139,250,.16));border:1px solid rgba(255,255,255,.12);border-radius:28px;padding:28px;box-shadow:0 20px 80px rgba(0,0,0,.25)}h1{font-size:36px;line-height:1.05;margin:0 0 10px}.sub{color:var(--muted);font-size:15px;max-width:720px}.searchbox{display:flex;margin-top:22px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:18px;overflow:hidden}.searchbox input{flex:1;background:transparent;color:var(--white);border:0;padding:16px 18px;font-size:16px;outline:none}.searchbox button,.pillbutton{border:0;background:var(--blue);color:white;padding:0 18px;font-weight:700;cursor:pointer}.quick{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.11);border-radius:28px;padding:22px}.tabs{display:flex;gap:10px;flex-wrap:wrap;margin-top:15px}.tab{background:#213456;border:1px solid #30466d;color:var(--text);padding:10px 14px;border-radius:999px;cursor:pointer}.tab.active{background:var(--blue);border-color:var(--blue)}.grid{display:grid;grid-template-columns:360px 1fr;gap:18px;margin-top:18px}.panel,.card{background:rgba(17,28,51,.9);border:1px solid rgba(255,255,255,.1);border-radius:24px;box-shadow:0 14px 50px rgba(0,0,0,.18)}.panel{padding:18px;position:sticky;top:16px;height:max-content}.section-title{font-size:13px;text-transform:uppercase;letter-spacing:.13em;color:#b9c8e4;margin:4px 0 14px}.inputrow{display:grid;grid-template-columns:1fr 120px;gap:10px;align-items:center;margin:10px 0}.inputrow label{color:var(--muted);font-size:14px}.inputrow input{width:100%;background:#0d1729;border:1px solid #314668;color:white;border-radius:12px;padding:10px 12px;text-align:right}.toggles{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:16px 0}.toggle{background:#0d1729;border:1px solid #314668;border-radius:14px;padding:12px;text-align:center;cursor:pointer;color:var(--muted)}.toggle.on{background:rgba(49,208,149,.14);border-color:var(--green);color:#cffff0}.dash{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.metric{padding:18px}.metric h3{margin:0;color:var(--muted);font-size:13px;font-weight:600}.value{font-size:30px;font-weight:850;margin:8px 0}.badge{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:800;border-radius:999px;padding:7px 10px}.normal{background:rgba(49,208,149,.16);color:#b7ffe7}.under{background:rgba(255,107,107,.17);color:#ffd0d0}.over{background:rgba(247,201,72,.18);color:#fff0b0}.wide{grid-column:span 2}.full{grid-column:1/-1}.card{padding:20px}.bars{display:grid;gap:14px}.barrow{display:grid;grid-template-columns:150px 1fr 70px;gap:12px;align-items:center;color:var(--muted)}.track{height:12px;border-radius:99px;background:#0b1426;overflow:hidden;border:1px solid #26395b}.fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--blue),var(--green));width:50%}.relation{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.explain{font-size:14px;line-height:1.5;color:var(--muted)}.formula{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:#0d1729;border:1px solid #2c4164;padding:10px;border-radius:12px;color:#d7e6ff;margin-top:10px}.dupont{display:grid;grid-template-columns:repeat(7,auto);gap:10px;align-items:center;justify-content:center;text-align:center}.dupont .box{background:#0d1729;border:1px solid #30486f;border-radius:16px;padding:14px;min-width:118px}.op{font-size:26px;color:var(--muted)}.mini{color:var(--muted);font-size:12px}.footer{color:#7f8fac;font-size:12px;margin:22px 0;text-align:center}@media(max-width:950px){.hero,.grid{grid-template-columns:1fr}.dash{grid-template-columns:1fr 1fr}.panel{position:static}.relation{grid-template-columns:1fr}.wide{grid-column:span 1}}@media(max-width:600px){.dash{grid-template-columns:1fr}.app{padding:14px}h1{font-size:28px}.dupont{grid-template-columns:1fr}.op{display:none}}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="hero">
+    <div class="hero-card">
+      <div class="section-title">Bank-style learning dashboard</div>
+      <h1>Financial Ratio Explorer</h1>
+      <p class="sub">Built for entry-level finance students: type a company, edit the financial statement numbers, and instantly see liquidity, leverage, profitability, efficiency, and market-value ratios update.</p>
+      <div class="searchbox"><input id="companySearch" placeholder="Search company or ticker: Ford, Tesla, Apple, Microsoft..." /><button onclick="loadCompany()">Load</button></div>
+      <div class="tabs"><button class="tab active" onclick="setCompany('F')">Ford</button><button class="tab" onclick="setCompany('TSLA')">Tesla</button><button class="tab" onclick="setCompany('AAPL')">Apple</button><button class="tab" onclick="setCompany('MSFT')">Microsoft</button><button class="tab" onclick="resetCustom()">Custom</button></div>
+    </div>
+    <div class="quick">
+      <div class="section-title">Beginner guide</div>
+      <p class="explain"><b>Think of ratios as financial vital signs.</b> Liquidity asks, “Can the company pay soon?” Leverage asks, “How much debt is supporting assets?” Profitability asks, “How much profit is produced?” Market ratios ask, “How much are investors willing to pay?”</p>
+      <div class="formula">ROE = Profit Margin × Asset Turnover × Equity Multiplier</div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <aside class="panel">
+      <div class="section-title">Editable financial inputs</div>
+      <div class="inputrow"><label>Sales / Revenue</label><input id="sales" type="number" value="2311" oninput="calc()"></div>
+      <div class="inputrow"><label>Net Income</label><input id="netIncome" type="number" value="363" oninput="calc()"></div>
+      <div class="inputrow"><label>EBIT</label><input id="ebit" type="number" value="691" oninput="calc()"></div>
+      <div class="inputrow"><label>Depreciation</label><input id="depr" type="number" value="276" oninput="calc()"></div>
+      <div class="inputrow"><label>Interest Expense</label><input id="interest" type="number" value="141" oninput="calc()"></div>
+      <div class="inputrow"><label>Cash</label><input id="cash" type="number" value="98" oninput="calc()"></div>
+      <div class="inputrow"><label>Inventory</label><input id="inventory" type="number" value="422" oninput="calc()"></div>
+      <div class="inputrow"><label>Current Assets</label><input id="currentAssets" type="number" value="708" oninput="calc()"></div>
+      <div class="inputrow"><label>Current Liabilities</label><input id="currentLiabilities" type="number" value="540" oninput="calc()"></div>
+      <div class="inputrow"><label>Total Assets</label><input id="totalAssets" type="number" value="3588" oninput="calc()"></div>
+      <div class="inputrow"><label>Total Equity</label><input id="totalEquity" type="number" value="2591" oninput="calc()"></div>
+      <div class="inputrow"><label>Long-term Debt</label><input id="longDebt" type="number" value="457" oninput="calc()"></div>
+      <div class="inputrow"><label>Share Price</label><input id="price" type="number" value="24" oninput="calc()"></div>
+      <div class="inputrow"><label>EPS</label><input id="eps" type="number" value="2.4" oninput="calc()"></div>
+      <div class="inputrow"><label>Expected Growth %</label><input id="growth" type="number" value="8" oninput="calc()"></div>
+      <div class="toggles"><div id="teachToggle" class="toggle on" onclick="toggleExplain()">Explain mode</div><div id="benchToggle" class="toggle on" onclick="toggleBench()">Benchmarks</div></div>
+    </aside>
+
+    <main>
+      <div class="dash">
+        <div class="card metric"><h3>Current Ratio</h3><div class="value" id="currentRatio">—</div><span id="currentStatus" class="badge">—</span></div>
+        <div class="card metric"><h3>Quick Ratio</h3><div class="value" id="quickRatio">—</div><span id="quickStatus" class="badge">—</span></div>
+        <div class="card metric"><h3>Debt / Equity</h3><div class="value" id="debtEquity">—</div><span id="deStatus" class="badge">—</span></div>
+        <div class="card metric"><h3>Profit Margin</h3><div class="value" id="profitMargin">—</div><span id="pmStatus" class="badge">—</span></div>
+
+        <div class="card wide"><div class="section-title">Ratio strength map</div><div class="bars" id="bars"></div></div>
+        <div class="card wide"><div class="section-title">Common-size snapshot</div><div class="bars" id="commonSize"></div></div>
+
+        <div class="card full">
+          <div class="section-title">DuPont relationship: why ratios move together</div>
+          <div class="dupont"><div class="box"><b id="roeBox">—</b><div class="mini">ROE</div></div><div class="op">=</div><div class="box"><b id="pmBox">—</b><div class="mini">Profit Margin</div></div><div class="op">×</div><div class="box"><b id="tatBox">—</b><div class="mini">Asset Turnover</div></div><div class="op">×</div><div class="box"><b id="emBox">—</b><div class="mini">Equity Multiplier</div></div></div>
+        </div>
+
+        <div class="card full" id="explainPanel">
+          <div class="section-title">What changed?</div>
+          <div class="relation">
+            <p class="explain"><b>Liquidity:</b> raising current assets usually improves the current ratio. But if inventory is a big part of current assets, the quick ratio may stay weaker because inventory may not turn into cash quickly.</p>
+            <p class="explain"><b>Leverage:</b> more debt can increase ROE through the equity multiplier, but it also increases risk because the company must cover interest payments.</p>
+            <p class="explain"><b>Profitability:</b> higher net income improves profit margin, ROA, and ROE. ROE can rise because the company is more profitable, more efficient, or more leveraged.</p>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  <div class="footer">For learning use only. Benchmarks are simplified teaching ranges and should be compared with industry peers in real analysis.</div>
+</div>
+<script>
+const companies={
+ F:{sales:189600,netIncome:4300,ebit:10000,depr:8000,interest:3600,cash:29000,inventory:18000,currentAssets:128000,currentLiabilities:96000,totalAssets:285000,totalEquity:43000,longDebt:90000,price:13.79,eps:1.05,growth:4},
+ TSLA:{sales:97150,netIncome:15000,ebit:17000,depr:4700,interest:200,cash:29000,inventory:13600,currentAssets:49600,currentLiabilities:28700,totalAssets:122000,totalEquity:68000,longDebt:5200,price:433.16,eps:4.2,growth:18},
+ AAPL:{sales:383000,netIncome:97000,ebit:114000,depr:11500,interest:3900,cash:62000,inventory:6300,currentAssets:143000,currentLiabilities:145000,totalAssets:352000,totalEquity:62000,longDebt:95000,price:190,eps:6.1,growth:7},
+ MSFT:{sales:245000,netIncome:88000,ebit:109000,depr:22000,interest:2900,cash:80000,inventory:2500,currentAssets:159000,currentLiabilities:125000,totalAssets:512000,totalEquity:268000,longDebt:53000,price:425,eps:11.8,growth:12}
+};
+let explain=true, bench=true;function n(id){return parseFloat(document.getElementById(id).value)||0}function fmt(x,d=2){return isFinite(x)?x.toFixed(d):'—'}function pct(x){return isFinite(x)?(x*100).toFixed(1)+'%':'—'}function cls(name){return name==='Normal'?'normal':name==='Underperforming'?'under':'over'}function status(v,type){if(!bench)return ['Benchmark off','normal'];if(type==='liq')return v<1?['Underperforming','under']:v<=2.5?['Normal','normal']:['Overperforming','over'];if(type==='quick')return v<.8?['Underperforming','under']:v<=1.8?['Normal','normal']:['Overperforming','over'];if(type==='de')return v>2?['Underperforming','under']:v>=.3?['Normal','normal']:['Overperforming','over'];if(type==='pm')return v<.05?['Underperforming','under']:v<=.2?['Normal','normal']:['Overperforming','over'];return ['Normal','normal']}function badge(id,arr){let e=document.getElementById(id);e.textContent=arr[0];e.className='badge '+arr[1]}
+function calc(){let sales=n('sales'),ni=n('netIncome'),ebit=n('ebit'),depr=n('depr'),int=n('interest'),cash=n('cash'),inv=n('inventory'),ca=n('currentAssets'),cl=n('currentLiabilities'),ta=n('totalAssets'),te=n('totalEquity'),ltd=n('longDebt'),price=n('price'),eps=n('eps'),growth=n('growth');let debt=ta-te,cr=ca/cl,qr=(ca-inv)/cl,cashr=cash/cl,de=debt/te,em=ta/te,cc=(ebit+depr)/int,tat=sales/ta,pm=ni/sales,roa=ni/ta,roe=ni/te,pe=price/eps,peg=pe/growth;document.getElementById('currentRatio').textContent=fmt(cr);document.getElementById('quickRatio').textContent=fmt(qr);document.getElementById('debtEquity').textContent=fmt(de);document.getElementById('profitMargin').textContent=pct(pm);badge('currentStatus',status(cr,'liq'));badge('quickStatus',status(qr,'quick'));badge('deStatus',status(de,'de'));badge('pmStatus',status(pm,'pm'));document.getElementById('roeBox').textContent=pct(roe);document.getElementById('pmBox').textContent=pct(pm);document.getElementById('tatBox').textContent=fmt(tat)+'x';document.getElementById('emBox').textContent=fmt(em)+'x';let metrics=[['Cash Ratio',cashr,1],['Cash Coverage',cc,10],['Asset Turnover',tat,2],['ROA',roa,.25],['ROE',roe,.4],['P/E',pe,40],['PEG',peg,3]];document.getElementById('bars').innerHTML=metrics.map(m=>`<div class="barrow"><span>${m[0]}</span><div class="track"><div class="fill" style="width:${Math.max(4,Math.min(100,m[1]/m[2]*100))}%"></div></div><b>${m[0].includes('RO')?pct(m[1]):fmt(m[1])}</b></div>`).join('');let cs=[['Cash / Assets',cash/ta],['Inventory / Assets',inv/ta],['Current Assets / Assets',ca/ta],['Debt / Assets',debt/ta],['Equity / Assets',te/ta],['Net Income / Sales',pm]];document.getElementById('commonSize').innerHTML=cs.map(m=>`<div class="barrow"><span>${m[0]}</span><div class="track"><div class="fill" style="width:${Math.max(4,Math.min(100,m[1]*100))}%"></div></div><b>${pct(m[1])}</b></div>`).join('')}
+function setCompany(t){Object.entries(companies[t]).forEach(([k,v])=>{let id={netIncome:'netIncome',longDebt:'longDebt'}[k]||k;document.getElementById(id).value=v});document.getElementById('companySearch').value=t;calc()}function loadCompany(){let q=document.getElementById('companySearch').value.trim().toUpperCase();if(q.includes('TESLA'))q='TSLA';if(q.includes('FORD'))q='F';if(q.includes('APPLE'))q='AAPL';if(q.includes('MICROSOFT'))q='MSFT';if(companies[q])setCompany(q);else alert('Company not in demo database yet. Use Custom and enter numbers manually.')}function resetCustom(){document.querySelectorAll('input[type=number]').forEach(x=>x.value=0);document.getElementById('companySearch').value='Custom';calc()}function toggleExplain(){explain=!explain;document.getElementById('explainPanel').style.display=explain?'block':'none';document.getElementById('teachToggle').classList.toggle('on',explain)}function toggleBench(){bench=!bench;document.getElementById('benchToggle').classList.toggle('on',bench);calc()}calc();
+</script>
+</body>
+</html>
